@@ -2,17 +2,37 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Lock, Mail } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 
 export default function AdminLogin() {
   const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      window.location.href = "/admin/dashboard"
+    }
+  }, [user, authLoading])
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center px-4">
+        <div className="text-center">
+          <p className="text-primary-foreground">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
@@ -30,6 +50,7 @@ export default function AdminLogin() {
 
       if (!response.ok) {
         setError(data.message || "Login gagal")
+        setLoading(false)
         return
       }
 
@@ -37,12 +58,13 @@ export default function AdminLogin() {
       localStorage.setItem("authToken", data.token)
       localStorage.setItem("user", JSON.stringify(data.user))
 
-      // Redirect to previous page or dashboard
+      // Redirect to previous page or dashboard using window.location.href
+      // to force full page reload and refresh auth context
       const returnUrl = new URLSearchParams(window.location.search).get('returnUrl')
       if (returnUrl) {
         window.location.href = returnUrl
       } else {
-        router.push("/admin/dashboard")
+        window.location.href = "/admin/dashboard"
       }
     } catch (err) {
       setError("Terjadi kesalahan, silakan coba lagi")

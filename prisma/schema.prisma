@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Admin user model untuk authentication
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  name      String
+  role      String     @default("admin")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  articles  Article[]
+}
+
+// Kategori artikel
+model Category {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  description String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  articles  Article[]
+}
+
+// Model untuk artikel/berita
+model Article {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  content     String     @db.Text
+  excerpt     String?
+  featuredImage String?
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  author      User       @relation(fields: [authorId], references: [id])
+  authorId    String
+  status      String     @default("draft") // draft, published
+  views       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  publishedAt DateTime?
+  
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([status])
+}
+
+// Model untuk galeri foto
+model Gallery {
+  id        String     @id @default(cuid())
+  title     String
+  image     String
+  description String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+// Model untuk halaman contact
+model ContactMessage {
+  id        String     @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String     @db.Text
+  createdAt DateTime   @default(now())
+}

@@ -8,7 +8,7 @@ let sqlInstance: ReturnType<typeof neon> | null = null
  */
 function getDb() {
   if (!sqlInstance) {
-    const databaseUrl = process.env.DATABASE_URL
+    let databaseUrl = process.env.DATABASE_URL
     
     if (!databaseUrl) {
       // During build time, if DATABASE_URL is not set, we'll create a mock
@@ -31,7 +31,37 @@ function getDb() {
       return mockDb
     }
     
-    sqlInstance = neon(databaseUrl)
+    // Clean and validate the connection string
+    // Remove quotes if present and trim whitespace
+    databaseUrl = databaseUrl.trim()
+    
+    // Remove surrounding quotes (single or double, with or without escaping)
+    databaseUrl = databaseUrl.replace(/^["']|["']$/g, "")
+    databaseUrl = databaseUrl.replace(/^\\["']|\\["']$/g, "")
+    
+    // Remove any escaped quotes that might cause issues
+    databaseUrl = databaseUrl.replace(/\\"/g, '"').replace(/\\'/g, "'")
+    
+    // Final trim to ensure no leading/trailing whitespace
+    databaseUrl = databaseUrl.trim()
+    
+    // Validate that it's a valid URL
+    try {
+      new URL(databaseUrl)
+    } catch (error) {
+      throw new Error(
+        `Database connection string is not a valid URL. Connection string: "${databaseUrl}"`
+      )
+    }
+    
+    // Initialize neon with proper error handling
+    try {
+      sqlInstance = neon(databaseUrl)
+    } catch (error: any) {
+      throw new Error(
+        `Failed to initialize database connection: ${error?.message || 'Unknown error'}. Connection string: "${databaseUrl}"`
+      )
+    }
   }
   
   return sqlInstance

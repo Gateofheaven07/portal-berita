@@ -191,7 +191,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <a href="mailto:j.comnews@gmail.com" className="text-primary hover:underline font-medium">j.comnews@gmail.com</a>
+                    <a href="mailto:j.comnews@gmail.com" className="text-primary hover:underline font-medium">commcraft.23@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -202,7 +202,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Telepon</p>
-                    <a href="tel:+621234567890" className="text-primary hover:underline font-medium">+62 (0) 123 456 7890</a>
+                    <a href="tel:+621234567890" className="text-primary hover:underline font-medium">+62 896 5482 2326</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -214,7 +214,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Alamat</p>
-                    <p className="font-medium">Jakarta, Jabodetabek</p>
+                    <p className="font-medium">Depok, Jawa Barat</p>
                   </div>
                 </div>
               </div>

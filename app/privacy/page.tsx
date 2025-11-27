@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
                 <h2 className="text-2xl font-bold text-foreground">1. Pengenalan</h2>
               </div>
               <p className="text-foreground leading-relaxed">
-                J.comNews ("kami", "kita", atau "situs") menghormati privasi pengunjung dan pengguna kami. 
+                J.comNews Kami menghormati privasi pengunjung dan pengguna kami. 
                 Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi 
                 pribadi Anda ketika menggunakan situs web kami.
               </p>
@@ -152,7 +152,7 @@ export default function PrivacyPolicyPage() {
               <div className="flex items-center gap-2">
                 <Mail className="w-5 h-5 text-primary" />
                 <a href="mailto:j.comnews@gmail.com" className="text-primary hover:underline font-medium text-lg">
-                  j.comnews@gmail.com
+                commcraft.23@gmail.com
                 </a>
               </div>
             </div>

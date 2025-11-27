@@ -3,6 +3,10 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { formatDate, formatDateShort } from "@/lib/date-utils"
 
+// Force dynamic rendering to ensure fresh data on every request
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface Article {
   id: string
   title: string

@@ -3,6 +3,10 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { formatDate, formatDateShort } from "@/lib/date-utils"
 
+// Force dynamic rendering to ensure fresh data on every request
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface PageProps {
   params: Promise<{
     slug: string
@@ -34,8 +38,36 @@ async function getCategoryArticles(slug: string): Promise<CategoryArticle[]> {
       JOIN "Category" c ON a."categoryId" = c.id
       WHERE c.slug = ${slug} AND a.status = 'published'
       ORDER BY a."publishedAt" DESC
-    ` as CategoryArticle[]
-    return result
+    `
+    
+    // Convert to array and normalize data structure
+    // Handle different return types from neon()
+    let articlesArray: any[] = []
+    if (Array.isArray(result)) {
+      articlesArray = result
+    } else if (result && typeof result === 'object') {
+      // If result is an object with rows property (some neon versions)
+      articlesArray = (result as any).rows || (result as any).data || [result]
+    }
+    
+    // Normalize data to ensure consistent structure and prevent hydration errors
+    // Use JSON.parse(JSON.stringify()) to ensure serializable data
+    return JSON.parse(JSON.stringify(articlesArray.map((article: any) => ({
+      id: String(article?.id || ''),
+      title: String(article?.title || ''),
+      slug: String(article?.slug || ''),
+      content: article?.content ? String(article.content) : '',
+      excerpt: article?.excerpt ? String(article.excerpt) : null,
+      featuredImage: article?.featuredImage ? String(article.featuredImage) : null,
+      status: String(article?.status || ''),
+      views: Number(article?.views || 0),
+      createdAt: article?.createdAt ? new Date(article.createdAt).toISOString() : '',
+      updatedAt: article?.updatedAt ? new Date(article.updatedAt).toISOString() : '',
+      publishedAt: article?.publishedAt ? new Date(article.publishedAt).toISOString() : null,
+      categoryId: String(article?.categoryId || ''),
+      categoryName: article?.categoryName ? String(article.categoryName) : '',
+      categoryDescription: article?.categoryDescription ? String(article.categoryDescription) : null,
+    }))))
   } catch (error) {
     console.error("Error fetching articles:", error)
     return []

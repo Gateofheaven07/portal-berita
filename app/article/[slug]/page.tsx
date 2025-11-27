@@ -4,6 +4,10 @@ import { ChevronLeft, Clock, User, Eye } from "lucide-react"
 import { formatDate, formatDateShort } from "@/lib/date-utils"
 import { ViewTracker } from "@/components/view-tracker"
 
+// Force dynamic rendering to ensure fresh data on every request
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface PageProps {
   params: Promise<{
     slug: string

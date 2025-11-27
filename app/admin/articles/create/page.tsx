@@ -312,7 +312,7 @@ export default function CreateArticle() {
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+              className="flex-1 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
               {submitting ? "Sedang Menyimpan..." : "Buat Artikel"}
             </button>

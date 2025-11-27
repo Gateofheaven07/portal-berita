@@ -69,14 +69,14 @@ export default function AdminMessagesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground shadow-lg">
+      <header className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center gap-4">
           <Link href="/admin/dashboard" className="hover:opacity-80">
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 text-white" />
           </Link>
           <div>
             <h1 className="text-3xl font-bold">Pesan Masuk</h1>
-            <p className="opacity-80 mt-1">{messages.length} pesan</p>
+            <p className="opacity-90 mt-1">{messages.length} pesan</p>
           </div>
         </div>
       </header>

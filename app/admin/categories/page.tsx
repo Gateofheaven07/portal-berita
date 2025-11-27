@@ -119,10 +119,10 @@ export default function AdminCategoriesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground shadow-lg">
+      <header className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center gap-4">
           <Link href="/admin/dashboard" className="hover:opacity-80">
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 text-white" />
           </Link>
           <h1 className="text-3xl font-bold">Kelola Kategori</h1>
         </div>
@@ -138,7 +138,7 @@ export default function AdminCategoriesPage() {
               setFormData({ name: "", description: "" })
               setShowForm(true)
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity"
           >
             <Plus className="w-4 h-4" />
             Tambah Kategori

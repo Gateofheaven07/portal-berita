@@ -101,9 +101,7 @@ export default async function AllArticlesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Page Header */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-cyan-500 via-blue-500 to-purple-400 py-8 overflow-hidden">
-        {/* Decorative overlay for depth and smooth transition */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-cyan-300/5"></div>
+      <section className="relative py-8 overflow-hidden" style={{ background: '#1E3A8A' }}>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold mb-3 text-white drop-shadow-lg">Semua Artikel</h1>
           <p className="text-lg text-white/95 text-balance drop-shadow-md">

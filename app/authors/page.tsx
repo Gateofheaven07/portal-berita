@@ -33,7 +33,7 @@ export default function AuthorsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
+      <section className="text-white py-12" style={{ background: '#1E3A8A' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-6">
             <Link href="/" className="hover:opacity-80">

@@ -85,7 +85,7 @@ export default function SearchPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Search Header */}
-      <section className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white py-12">
+      <section className="text-white py-12" style={{ background: '#1E3A8A' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-6">Cari Artikel</h1>
 
@@ -106,7 +106,8 @@ export default function SearchPage() {
             />
             <button
               onClick={() => handleSearch()}
-              className="absolute right-2 top-2.5 px-4 py-1.5 bg-blue-600 text-white rounded hover:opacity-90 transition-opacity text-sm font-medium"
+              className="absolute right-2 top-2.5 px-4 py-1.5 text-white rounded hover:opacity-90 transition-opacity text-sm font-medium"
+              style={{ background: '#1E3A8A' }}
             >
               Cari
             </button>

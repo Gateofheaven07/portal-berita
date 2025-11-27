@@ -80,7 +80,8 @@ export default function ArticlesPage() {
           </div>
           <Link
             href="/admin/articles/create"
-            className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:opacity-90 transition-opacity"
+            style={{ background: '#1E3A8A' }}
           >
             <Plus className="w-5 h-5" />
             Artikel Baru
@@ -98,9 +99,10 @@ export default function ArticlesPage() {
               onClick={() => setFilter(status)}
               className={`px-4 py-2 rounded-lg font-medium transition-opacity ${
                 filter === status
-                  ? "bg-blue-500 text-white"
+                  ? "text-white"
                   : "bg-card border border-border text-foreground hover:bg-accent/10"
               }`}
+              style={filter === status ? { background: '#1E3A8A' } : {}}
             >
               {status === "all" ? "Semua" : status === "published" ? "Dipublikasi" : "Draft"}
             </button>

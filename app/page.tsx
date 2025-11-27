@@ -117,20 +117,20 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-cyan-500 via-blue-500 to-purple-400 py-16 md:py-24 overflow-hidden">
-        {/* Decorative overlay for depth and smooth transition */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-cyan-300/5"></div>
+      <section className="relative py-16 md:py-24 overflow-hidden" style={{ background: '#1E3A8A' }}>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-white drop-shadow-lg">Portal Berita Jabodetabek</h1>
-            <p className="text-xl md:text-2xl text-white/95 mb-8 text-balance drop-shadow-md">
+            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-balance text-white drop-shadow-lg">Portal Berita Jabodetabek</h1>
+            <p className="text-sm md:text-base text-white/80 mb-2 italic">Informasi Terpercaya, Update Setiap Saat</p>
+            <p className="text-xl md:text-2xl text-white/95 mb-6 text-balance drop-shadow-md">
               Sumber Informasi Terpercaya dan Terkini untuk Jabodetabek
             </p>
             <Link
               href="/search"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-50 hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-white rounded-lg font-semibold hover:bg-gray-50 hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg"
+              style={{ color: '#1E3A8A' }}
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-5 h-5" style={{ color: '#1E3A8A' }} />
               Mulai Jelajahi
             </Link>
           </div>
@@ -194,7 +194,8 @@ export default async function Home() {
             <div className="text-center mt-8">
               <Link
                 href="/articles"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
+                style={{ background: '#1E3A8A' }}
               >
                 Lihat Lebih Banyak
                 <ArrowRight className="w-5 h-5" />
@@ -246,15 +247,14 @@ export default async function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="relative py-12 md:py-16 bg-gradient-to-br from-blue-500 via-cyan-500 via-blue-600 to-purple-400 overflow-hidden">
-        {/* Decorative overlay for depth and smooth transition */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 via-transparent to-purple-300/5"></div>
+      <section className="relative py-12 md:py-16 overflow-hidden" style={{ background: '#1E3A8A' }}>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-lg">Tetap Terupdate Dengan Berita Terbaru</h2>
           <p className="text-xl text-white/95 mb-8">Jangan lewatkan informasi penting dan terkini dari Jabodetabek</p>
           <Link
             href="/contact"
-            className="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-50 hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg"
+            className="inline-block px-8 py-3 bg-white rounded-lg font-semibold hover:bg-gray-50 hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg"
+            style={{ color: '#1E3A8A' }}
           >
             Hubungi Kami
           </Link>

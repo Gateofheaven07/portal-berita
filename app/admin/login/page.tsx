@@ -26,7 +26,7 @@ export default function AdminLogin() {
   // Show loading while checking auth
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center px-4">
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#1E3A8A' }}>
         <div className="text-center">
           <p className="text-primary-foreground">Loading...</p>
         </div>
@@ -75,7 +75,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#1E3A8A' }}>
       <div className="w-full max-w-sm">
         {/* Card */}
         <div className="bg-background rounded-lg shadow-2xl p-6">

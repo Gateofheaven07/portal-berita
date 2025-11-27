@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white shadow-lg">
+      <header className="text-white shadow-lg" style={{ background: '#1E3A8A' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div>
@@ -29,9 +29,10 @@ export default function AdminDashboard() {
             </div>
             <button
               onClick={logout}
-              className="flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-lg hover:opacity-90 transition-opacity font-semibold"
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg hover:opacity-90 transition-opacity font-semibold"
+              style={{ color: '#1E3A8A' }}
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-5 h-5" style={{ color: '#1E3A8A' }} />
               Logout
             </button>
           </div>

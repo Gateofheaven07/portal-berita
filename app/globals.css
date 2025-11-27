@@ -122,6 +122,24 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@font-face {
+  font-family: 'Publico';
+  src: url('/fonts/Publico-Regular.woff2') format('woff2'),
+       url('/fonts/Publico-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Publico';
+  src: url('/fonts/Publico-Bold.woff2') format('woff2'),
+       url('/fonts/Publico-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -139,5 +157,9 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .font-publico {
+    font-family: 'Publico', 'Georgia', 'Times New Roman', serif;
   }
 }

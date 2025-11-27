@@ -43,7 +43,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <section className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white py-12">
+      <section className="text-white py-12" style={{ background: '#1E3A8A' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-6">
             <Link href="/" className="hover:opacity-80">
@@ -69,7 +69,7 @@ export default function ContactPage() {
                     href="mailto:info@portalberita.com"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    info@portalberita.com
+                    commcraft.23@gmail.com
                   </a>
                 </div>
               </div>
@@ -79,7 +79,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold text-foreground mb-1">Telepon</h3>
                   <a href="tel:+621234567890" className="text-muted-foreground hover:text-foreground transition-colors">
-                    +62 (0) 123 456 7890
+                    +62 896 5482 2326
                   </a>
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold text-foreground mb-1">Lokasi</h3>
                   <p className="text-muted-foreground">
-                    Jakarta, Jabodetabek
+                    Depok, Jawa Barat
                     <br />
                     Indonesia
                   </p>
@@ -170,7 +170,8 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-blue-500 text-white rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+                  className="w-full py-3 text-white rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
+                  style={{ background: '#1E3A8A' }}
                 >
                   {loading ? "Sedang Mengirim..." : "Kirim Pesan"}
                 </button>

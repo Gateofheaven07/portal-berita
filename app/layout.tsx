@@ -11,9 +11,13 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Portal Berita Jabodetabek - Informasi Terkini dan Terpercaya",
+  title: "JcomNews",
   description: "Portal berita terpercaya untuk Jabodetabek dengan berita utama, gaya hidup, kesehatan, dan politik",
   keywords: "berita, jabodetabek, jakarta, informasi, berita terkini",
+  icons: {
+    icon: "/logo_jcom.png",
+    apple: "/logo_jcom.png",
+  },
   openGraph: {
     title: "Portal Berita Jabodetabek",
     description: "Portal berita terpercaya untuk Jabodetabek",

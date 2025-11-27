@@ -1,6 +1,7 @@
 import { sql } from "@/lib/db"
 import { type NextRequest, NextResponse } from "next/server"
 import jwt from "jsonwebtoken"
+import { getIndonesiaDate } from "@/lib/date-utils"
 
 function verifyToken(req: NextRequest) {
   const token = req.headers.get("authorization")?.split(" ")[1]
@@ -134,9 +135,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     // Handle publishedAt: set if changing from draft to published, keep existing if already published
+    // Use Indonesia timezone to ensure correct date
     let publishedAt = existingArticle.publishedAt
     if (status === "published" && existingArticle.status === "draft") {
-      publishedAt = new Date()
+      publishedAt = getIndonesiaDate()
     } else if (status === "draft" && existingArticle.status === "published") {
       // Keep publishedAt even if changed to draft (for history)
       publishedAt = existingArticle.publishedAt

@@ -1,6 +1,7 @@
 import { sql } from "@/lib/db"
 import { type NextRequest, NextResponse } from "next/server"
 import jwt from "jsonwebtoken"
+import { getIndonesiaDate } from "@/lib/date-utils"
 
 function verifyToken(req: NextRequest) {
   const token = req.headers.get("authorization")?.split(" ")[1]
@@ -178,7 +179,8 @@ export async function POST(req: NextRequest) {
     const authorId = (decoded as any).id
 
     // Set publishedAt if status is published (use null for draft)
-    const publishedAt = status === "published" ? new Date() : null
+    // Use Indonesia timezone to ensure correct date
+    const publishedAt = status === "published" ? getIndonesiaDate() : null
 
     await sql`
       INSERT INTO "Article" (id, title, slug, content, excerpt, "categoryId", "authorId", "featuredImage", status, "publishedAt")

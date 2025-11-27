@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* About */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Portal Berita</h3>
+            <h3 className="font-bold text-lg mb-4">J.comNews</h3>
             <p className="text-sm text-slate-600">
               Sumber berita terpercaya untuk Jabodetabek dengan informasi terkini dan berkualitas.
             </p>
@@ -46,13 +46,8 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Halaman</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/gallery" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Galeri Foto
-                </Link>
-              </li>
-              <li>
-                <Link href="/authors" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Profil Penulis
+                <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Tentang Kami
                 </Link>
               </li>
               <li>
@@ -70,7 +65,7 @@ export default function Footer() {
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 <a href="mailto:info@portalberita.com" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  info@portalberita.com
+                j.comnews@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -89,7 +84,7 @@ export default function Footer() {
 
         <div className="border-t border-slate-200 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-slate-600">
-            <p>&copy; 2025 Portal Berita Jabodetabek. Hak Cipta Dilindungi.</p>
+            <p>&copy; 2025 J.comNews. Hak Cipta Dilindungi.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <Link href="/privacy" className="hover:text-slate-900 transition-colors">
                 Kebijakan Privasi

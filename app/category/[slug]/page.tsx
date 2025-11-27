@@ -76,10 +76,12 @@ export default async function CategoryPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Category Header */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold mb-3">{category.categoryName}</h1>
-          <p className="text-lg opacity-90 text-balance">
+      <section className="relative bg-gradient-to-br from-blue-600 via-cyan-500 via-blue-500 to-purple-400 py-8 overflow-hidden">
+        {/* Decorative overlay for depth and smooth transition */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-cyan-300/5"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold mb-3 text-white drop-shadow-lg">{category.categoryName}</h1>
+          <p className="text-lg text-white/95 text-balance drop-shadow-md">
             {category.categoryDescription || "Jelajahi berita dan artikel terbaru dalam kategori ini"}
           </p>
         </div>

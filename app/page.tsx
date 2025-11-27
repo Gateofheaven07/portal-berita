@@ -194,7 +194,7 @@ export default async function Home() {
             <div className="text-center mt-8">
               <Link
                 href="/articles"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
               >
                 Lihat Lebih Banyak
                 <ArrowRight className="w-5 h-5" />

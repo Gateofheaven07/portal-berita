@@ -85,13 +85,13 @@ export default function SearchPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Search Header */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
+      <section className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-6">Cari Artikel</h1>
 
           {/* Search Input */}
           <div className="relative">
-            <Search className="absolute left-4 top-3.5 w-5 h-5 text-primary-foreground/50" />
+            <Search className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
             <input
               type="text"
               value={query}
@@ -102,11 +102,11 @@ export default function SearchPage() {
                 }
               }}
               placeholder="Cari berita, artikel, atau topik..."
-              className="w-full pl-12 pr-4 py-3 bg-primary-foreground text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+              className="w-full pl-12 pr-4 py-3 bg-white text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300"
             />
             <button
               onClick={() => handleSearch()}
-              className="absolute right-2 top-2.5 px-4 py-1.5 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity text-sm font-medium"
+              className="absolute right-2 top-2.5 px-4 py-1.5 bg-blue-600 text-white rounded hover:opacity-90 transition-opacity text-sm font-medium"
             >
               Cari
             </button>

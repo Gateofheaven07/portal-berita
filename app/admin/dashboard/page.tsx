@@ -20,16 +20,16 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground shadow-lg">
+      <header className="bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold">Dashboard Admin</h1>
-              <p className="opacity-80 mt-1">Selamat datang, {user?.name}!</p>
+              <p className="opacity-90 mt-1">Selamat datang, {user?.name}!</p>
             </div>
             <button
               onClick={logout}
-              className="flex items-center gap-2 px-4 py-2 bg-primary-foreground text-primary rounded-lg hover:opacity-90 transition-opacity"
+              className="flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-lg hover:opacity-90 transition-opacity font-semibold"
             >
               <LogOut className="w-5 h-5" />
               Logout
@@ -74,21 +74,13 @@ export default function AdminDashboard() {
         </div>
 
         {/* Additional Management */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link
             href="/admin/categories"
             className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-shadow"
           >
             <h3 className="font-bold text-foreground mb-2">Kelola Kategori</h3>
             <p className="text-sm text-muted-foreground">Tambah, edit, dan hapus kategori</p>
-          </Link>
-          
-          <Link
-            href="/admin/gallery"
-            className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-shadow"
-          >
-            <h3 className="font-bold text-foreground mb-2">Kelola Galeri</h3>
-            <p className="text-sm text-muted-foreground">Upload dan kelola foto/video</p>
           </Link>
 
           <Link

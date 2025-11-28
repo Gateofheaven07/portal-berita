@@ -1,7 +1,6 @@
 import { sql } from "@/lib/db"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { formatDate, formatDateShort } from "@/lib/date-utils"
+import ArticlesList from "@/components/articles-list"
 
 // Force dynamic rendering to ensure fresh data on every request
 export const dynamic = 'force-dynamic'
@@ -117,96 +116,7 @@ export default async function AllArticlesPage() {
       {/* Articles Grid */}
       <section className="py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Featured Article */}
-          {articles.length > 0 && (
-            <div className="mb-6 bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="md:col-span-1">
-                  <img
-                    src={articles[0].featuredImage || "/placeholder.svg?key=featured1"}
-                    alt={articles[0].title}
-                    className="w-full h-32 md:h-full object-cover"
-                  />
-                </div>
-                <div className="md:col-span-2 p-4 md:p-6 flex flex-col justify-center">
-                  {articles[0].categoryName && articles[0].categorySlug && (
-                    <Link
-                      href={`/category/${articles[0].categorySlug}`}
-                      className="inline-block w-fit px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded mb-2 hover:bg-primary/20 transition-colors"
-                    >
-                      {articles[0].categoryName}
-                    </Link>
-                  )}
-                  <span className="inline-block w-fit px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded mb-2">
-                    Artikel Utama
-                  </span>
-                  <h2 className="text-lg md:text-xl font-bold mb-2 text-foreground line-clamp-2">{articles[0].title}</h2>
-                  <p className="text-muted-foreground mb-3 line-clamp-2 text-sm">
-                    {articles[0].excerpt || (articles[0].content ? articles[0].content.substring(0, 100) : "")}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      {formatDateShort(articles[0].publishedAt || articles[0].updatedAt)}
-                    </span>
-                    <Link
-                      href={`/article/${articles[0].slug}`}
-                      className="inline-flex items-center text-primary hover:opacity-80 transition-opacity font-medium text-sm"
-                    >
-                      Baca Selengkapnya
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Articles Grid */}
-          {articles.length > 1 && (
-            <>
-              <h3 className="text-xl font-bold mb-4 text-foreground">Artikel Lainnya</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {articles.slice(1).map((article) => (
-                  <article
-                    key={article.id}
-                    className="bg-card border border-border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
-                  >
-                    <img
-                      src={article.featuredImage || "/placeholder.svg?key=article1"}
-                      alt={article.title}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="p-4">
-                      {article.categoryName && article.categorySlug && (
-                        <Link
-                          href={`/category/${article.categorySlug}`}
-                          className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded mb-2 hover:bg-primary/20 transition-colors"
-                        >
-                          {article.categoryName}
-                        </Link>
-                      )}
-                      {article.publishedAt && (
-                        <p className="text-xs text-muted-foreground mb-2">
-                          {formatDateShort(article.publishedAt)}
-                        </p>
-                      )}
-                      <h3 className="text-lg font-bold mb-2 line-clamp-2 text-foreground">{article.title}</h3>
-                      <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">
-                        {article.excerpt || (article.content ? article.content.substring(0, 100) : "")}
-                      </p>
-                      <Link
-                        href={`/article/${article.slug}`}
-                        className="inline-flex items-center text-primary hover:opacity-80 transition-opacity font-medium text-sm"
-                      >
-                        Baca Selengkapnya
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </>
-          )}
+          <ArticlesList articles={articles} />
         </div>
       </section>
     </div>

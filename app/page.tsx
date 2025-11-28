@@ -121,12 +121,24 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 overflow-hidden" style={{ background: '#1E3A8A' }}>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section 
+        className="relative py-16 md:py-24 overflow-hidden"
+        style={{
+          backgroundImage: 'url(/city_background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Overlay biru dengan opacity rendah */}
+        <div className="absolute inset-0 bg-blue-900/50"></div>
+        
+        {/* Konten dengan z-index untuk memastikan di atas overlay */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-balance text-white drop-shadow-lg">Portal Berita Jabodetabek</h1>
-            <p className="text-sm md:text-base text-white/80 mb-2 italic">Informasi Terpercaya, Update Setiap Saat</p>
-            <p className="text-xl md:text-2xl text-white/95 mb-6 text-balance drop-shadow-md">
+            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-balance text-white drop-shadow-2xl">Portal Berita Jabodetabek</h1>
+            <p className="text-sm md:text-base text-white/90 mb-2 italic drop-shadow-lg">Informasi Terpercaya, Update Setiap Saat</p>
+            <p className="text-xl md:text-2xl text-white/95 mb-6 text-balance drop-shadow-xl">
               Sumber Informasi Terpercaya dan Terkini untuk Jabodetabek
             </p>
             <Link
@@ -251,10 +263,22 @@ export default async function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="relative py-12 md:py-16 overflow-hidden" style={{ background: '#1E3A8A' }}>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-lg">Tetap Terupdate Dengan Berita Terbaru</h2>
-          <p className="text-xl text-white/95 mb-8">Jangan lewatkan informasi penting dan terkini dari Jabodetabek</p>
+      <section 
+        className="relative py-12 md:py-16 overflow-hidden"
+        style={{
+          backgroundImage: 'url(/city_background2.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Overlay biru dengan opacity rendah */}
+        <div className="absolute inset-0 bg-blue-900/50"></div>
+        
+        {/* Konten dengan z-index untuk memastikan di atas overlay */}
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-2xl">Tetap Terupdate Dengan Berita Terbaru</h2>
+          <p className="text-xl text-white/95 mb-8 drop-shadow-xl">Jangan lewatkan informasi penting dan terkini dari Jabodetabek</p>
           <Link
             href="/contact"
             className="inline-block px-8 py-3 bg-white rounded-lg font-semibold hover:bg-gray-50 hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg"

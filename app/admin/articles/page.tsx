@@ -21,9 +21,11 @@ export default function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([])
   const [pageLoading, setPageLoading] = useState(true)
   const [filter, setFilter] = useState<"all" | "published" | "draft">("all")
+  const [selectedArticles, setSelectedArticles] = useState<string[]>([])
 
   useEffect(() => {
     fetchArticles()
+    setSelectedArticles([])
   }, [filter])
 
   async function fetchArticles() {
@@ -53,9 +55,53 @@ export default function ArticlesPage() {
 
       if (response.ok) {
         setArticles(articles.filter((a) => a.id !== id))
+        setSelectedArticles(selectedArticles.filter((selectedId) => selectedId !== id))
       }
     } catch (error) {
       console.error("Error deleting article:", error)
+    }
+  }
+
+  async function deleteSelectedArticles() {
+    if (selectedArticles.length === 0) return
+
+    if (!confirm(`Apakah Anda yakin ingin menghapus ${selectedArticles.length} artikel yang dipilih?`)) return
+
+    try {
+      const token = localStorage.getItem("authToken")
+      const response = await fetch(`/api/articles/bulk-delete`, {
+        method: "DELETE",
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ ids: selectedArticles }),
+      })
+
+      if (response.ok) {
+        setArticles(articles.filter((a) => !selectedArticles.includes(a.id)))
+        setSelectedArticles([])
+      } else {
+        const data = await response.json()
+        alert(data.message || "Gagal menghapus artikel")
+      }
+    } catch (error) {
+      console.error("Error deleting articles:", error)
+      alert("Terjadi kesalahan saat menghapus artikel")
+    }
+  }
+
+  function toggleSelectArticle(id: string) {
+    setSelectedArticles((prev) =>
+      prev.includes(id) ? prev.filter((selectedId) => selectedId !== id) : [...prev, id]
+    )
+  }
+
+  function toggleSelectAll() {
+    if (selectedArticles.length === articles.length) {
+      setSelectedArticles([])
+    } else {
+      setSelectedArticles(articles.map((a) => a.id))
     }
   }
 
@@ -91,22 +137,33 @@ export default function ArticlesPage() {
 
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
-        <div className="flex gap-3 mb-6">
-          {(["all", "published", "draft"] as const).map((status) => (
+        {/* Filters and Bulk Actions */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex gap-3">
+            {(["all", "published", "draft"] as const).map((status) => (
+              <button
+                key={status}
+                onClick={() => setFilter(status)}
+                className={`px-4 py-2 rounded-lg font-medium transition-opacity ${
+                  filter === status
+                    ? "text-white"
+                    : "bg-card border border-border text-foreground hover:bg-accent/10"
+                }`}
+                style={filter === status ? { background: '#1E3A8A' } : {}}
+              >
+                {status === "all" ? "Semua" : status === "published" ? "Dipublikasi" : "Draft"}
+              </button>
+            ))}
+          </div>
+          {selectedArticles.length > 0 && (
             <button
-              key={status}
-              onClick={() => setFilter(status)}
-              className={`px-4 py-2 rounded-lg font-medium transition-opacity ${
-                filter === status
-                  ? "text-white"
-                  : "bg-card border border-border text-foreground hover:bg-accent/10"
-              }`}
-              style={filter === status ? { background: '#1E3A8A' } : {}}
+              onClick={deleteSelectedArticles}
+              className="flex items-center gap-2 px-4 py-2 bg-destructive text-white rounded-lg hover:opacity-90 transition-opacity"
             >
-              {status === "all" ? "Semua" : status === "published" ? "Dipublikasi" : "Draft"}
+              <Trash2 className="w-5 h-5" />
+              Hapus {selectedArticles.length} Artikel
             </button>
-          ))}
+          )}
         </div>
 
         {/* Articles Table */}
@@ -122,6 +179,14 @@ export default function ArticlesPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border">
+                  <th className="text-left py-3 px-4 font-semibold text-foreground w-12">
+                    <input
+                      type="checkbox"
+                      checked={articles.length > 0 && selectedArticles.length === articles.length}
+                      onChange={toggleSelectAll}
+                      className="w-4 h-4 cursor-pointer"
+                    />
+                  </th>
                   <th className="text-left py-3 px-4 font-semibold text-foreground">No</th>
                   <th className="text-left py-3 px-4 font-semibold text-foreground">Judul</th>
                   <th className="text-left py-3 px-4 font-semibold text-foreground">Kategori</th>
@@ -133,6 +198,14 @@ export default function ArticlesPage() {
               <tbody>
                 {articles.map((article, index) => (
                   <tr key={article.id} className="border-b border-border hover:bg-accent/5">
+                    <td className="py-4 px-4">
+                      <input
+                        type="checkbox"
+                        checked={selectedArticles.includes(article.id)}
+                        onChange={() => toggleSelectArticle(article.id)}
+                        className="w-4 h-4 cursor-pointer"
+                      />
+                    </td>
                     <td className="py-4 px-4 text-foreground font-medium">
                       {index + 1}
                     </td>

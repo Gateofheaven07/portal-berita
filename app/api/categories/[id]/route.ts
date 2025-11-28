@@ -52,7 +52,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
   try {
     const { id } = await params
-    const { name, description } = await req.json()
+    const { name, description, icon } = await req.json()
 
     if (!name) {
       return NextResponse.json({ message: "Nama kategori harus diisi" }, { status: 400 })
@@ -65,9 +65,16 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-")
 
+    // Add icon column if it doesn't exist (migration on the fly)
+    try {
+      await sql`ALTER TABLE "Category" ADD COLUMN IF NOT EXISTS icon TEXT`
+    } catch (e) {
+      // Column might already exist, ignore error
+    }
+
     await sql`
       UPDATE "Category" 
-      SET name = ${name}, slug = ${slug}, description = ${description || null}
+      SET name = ${name}, slug = ${slug}, description = ${description || null}, icon = ${icon || null}
       WHERE id = ${id}
     `
 

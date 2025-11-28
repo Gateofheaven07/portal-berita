@@ -122,6 +122,7 @@ export default function ArticlesPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border">
+                  <th className="text-left py-3 px-4 font-semibold text-foreground">No</th>
                   <th className="text-left py-3 px-4 font-semibold text-foreground">Judul</th>
                   <th className="text-left py-3 px-4 font-semibold text-foreground">Kategori</th>
                   <th className="text-left py-3 px-4 font-semibold text-foreground">Status</th>
@@ -130,8 +131,11 @@ export default function ArticlesPage() {
                 </tr>
               </thead>
               <tbody>
-                {articles.map((article) => (
+                {articles.map((article, index) => (
                   <tr key={article.id} className="border-b border-border hover:bg-accent/5">
+                    <td className="py-4 px-4 text-foreground font-medium">
+                      {index + 1}
+                    </td>
                     <td className="py-4 px-4">
                       <div>
                         <p className="font-medium text-foreground">{article.title}</p>

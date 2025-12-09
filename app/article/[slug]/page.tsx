@@ -78,7 +78,7 @@ async function getRelatedArticles(categoryId: string, currentSlug: string): Prom
       WHERE a."categoryId" = ${categoryId} 
       AND a.slug != ${currentSlug}
       AND a.status = 'published'
-      ORDER BY a."publishedAt" DESC, a."createdAt" DESC
+      ORDER BY a."createdAt" DESC
       LIMIT 3
     ` as Article[]
     return result

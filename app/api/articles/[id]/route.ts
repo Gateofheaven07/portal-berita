@@ -95,7 +95,16 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     const article = result[0]
-    return NextResponse.json({ article })
+
+    // Fetch images
+    const images = await sql`
+      SELECT id, url, caption, "order"
+      FROM "ArticleImage"
+      WHERE "articleId" = ${id}
+      ORDER BY "order" ASC
+    `
+
+    return NextResponse.json({ article: { ...article, images } })
   } catch (error) {
     console.error("Error fetching article:", error)
     return NextResponse.json({ message: "Error fetching article" }, { status: 500 })
@@ -111,7 +120,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
   try {
     const { id } = await params
-    const { title, excerpt, content, categoryId, featuredImage, status } = await req.json()
+    const { title, excerpt, content, categoryId, featuredImage, status, images } = await req.json()
 
     if (!title || !content || !categoryId) {
       return NextResponse.json({ message: "Required fields missing" }, { status: 400 })
@@ -158,6 +167,23 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         "updatedAt" = NOW()
       WHERE id = ${id}
     `
+
+    // Handle images
+    if (images && Array.isArray(images)) {
+      // Delete existing images
+      await sql`DELETE FROM "ArticleImage" WHERE "articleId" = ${id}`
+      
+      // Insert new images
+      for (const [index, img] of images.entries()) {
+        if (img.url) {
+          const imageId = require("crypto").randomUUID()
+          await sql`
+            INSERT INTO "ArticleImage" (id, url, caption, "order", "articleId")
+            VALUES (${imageId}, ${img.url}, ${img.caption || null}, ${index}, ${id})
+          `
+        }
+      }
+    }
 
     return NextResponse.json({ message: "Article updated" })
   } catch (error: any) {

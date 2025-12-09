@@ -51,9 +51,22 @@ model Article {
   updatedAt   DateTime   @updatedAt
   publishedAt DateTime?
   
+  images      ArticleImage[]
+
   @@index([categoryId])
   @@index([authorId])
   @@index([status])
+}
+
+model ArticleImage {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  order     Int      @default(0)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+
+  @@index([articleId])
 }
 
 // Model untuk galeri foto

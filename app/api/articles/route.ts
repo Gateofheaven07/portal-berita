@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { title, excerpt, content, categoryId, featuredImage, status } = await req.json()
+    const { title, excerpt, content, categoryId, featuredImage, status, images } = await req.json()
 
     if (!title || !content || !categoryId) {
       return NextResponse.json({ message: "Required fields missing" }, { status: 400 })
@@ -186,6 +186,19 @@ export async function POST(req: NextRequest) {
       INSERT INTO "Article" (id, title, slug, content, excerpt, "categoryId", "authorId", "featuredImage", status, "publishedAt")
       VALUES (${id}, ${title}, ${slug}, ${content}, ${excerpt || null}, ${categoryId}, ${authorId}, ${featuredImage || null}, ${status}, ${publishedAt})
     `
+
+    // Insert images if provided
+    if (images && Array.isArray(images) && images.length > 0) {
+      for (const [index, img] of images.entries()) {
+        if (img.url) {
+          const imageId = require("crypto").randomUUID()
+          await sql`
+            INSERT INTO "ArticleImage" (id, url, caption, "order", "articleId")
+            VALUES (${imageId}, ${img.url}, ${img.caption || null}, ${index}, ${id})
+          `
+        }
+      }
+    }
 
     return NextResponse.json({ message: "Article created", id }, { status: 201 })
   } catch (error: any) {

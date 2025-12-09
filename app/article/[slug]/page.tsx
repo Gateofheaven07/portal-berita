@@ -3,6 +3,13 @@ import Link from "next/link"
 import { ChevronLeft, Clock, User, Eye } from "lucide-react"
 import { formatDate, formatDateShort } from "@/lib/date-utils"
 import { ViewTracker } from "@/components/view-tracker"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 // Force dynamic rendering to ensure fresh data on every request
 export const dynamic = 'force-dynamic'
@@ -30,6 +37,7 @@ interface Article {
   categoryName: string
   categorySlug: string
   authorName: string
+  images: { url: string; caption: string | null }[]
 }
 
 async function getArticle(slug: string): Promise<Article | null> {
@@ -40,8 +48,21 @@ async function getArticle(slug: string): Promise<Article | null> {
       JOIN "Category" c ON a."categoryId" = c.id
       JOIN "User" u ON a."authorId" = u.id
       WHERE a.slug = ${slug} AND a.status = 'published'
-    ` as Article[]
-    return result[0] || null
+    ` as any[]
+    
+    if (result.length === 0) return null
+
+    const article = result[0]
+    
+    // Fetch additional images
+    const images = await sql`
+      SELECT url, caption
+      FROM "ArticleImage"
+      WHERE "articleId" = ${article.id}
+      ORDER BY "order" ASC
+    ` as { url: string; caption: string | null }[]
+
+    return { ...article, images }
   } catch (error) {
     console.error("Error fetching article:", error)
     return null
@@ -150,22 +171,62 @@ export default async function ArticlePage({ params }: PageProps) {
             </span>
           </div>
 
-          {/* Featured Image */}
-          {article.featuredImage && (
-            <div className="mb-6">
-              <img
-                src={article.featuredImage || "/placeholder.svg"}
-                alt={article.title}
-                className="w-full h-64 md:h-80 object-cover rounded-lg"
-              />
-              {/* Image Caption */}
-              <div className="text-center mt-2">
-                <span className="text-sm text-muted-foreground italic">
-                  (Gambar - {article.title})
-                </span>
-              </div>
-            </div>
-          )}
+          {/* Featured Image or Carousel */}
+          {(() => {
+            const allImages = [
+              article.featuredImage ? { url: article.featuredImage, caption: null, isFeatured: true } : null,
+              ...(article.images || []).map(img => ({ url: img.url, caption: img.caption, isFeatured: false }))
+            ].filter((img): img is { url: string; caption: string | null; isFeatured: boolean } => !!img)
+
+            if (allImages.length > 1) {
+              return (
+                <div className="mb-6">
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {allImages.map((img, index) => (
+                        <CarouselItem key={index}>
+                          <div className="p-1">
+                            <img
+                              src={img.url}
+                              alt={img.caption || article.title}
+                              className="w-full h-64 md:h-80 object-cover rounded-lg"
+                            />
+                            <div className="text-center mt-2">
+                              <span className="text-sm text-muted-foreground italic">
+                                {img.caption || (img.isFeatured ? `(Gambar - ${article.title})` : "")}
+                              </span>
+                            </div>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-2" />
+                    <CarouselNext className="right-2" />
+                  </Carousel>
+                </div>
+              )
+            }
+
+            // Single Image Fallback
+            if (article.featuredImage) {
+              return (
+                <div className="mb-6">
+                  <img
+                    src={article.featuredImage}
+                    alt={article.title}
+                    className="w-full h-64 md:h-80 object-cover rounded-lg"
+                  />
+                  <div className="text-center mt-2">
+                    <span className="text-sm text-muted-foreground italic">
+                      (Gambar - {article.title})
+                    </span>
+                  </div>
+                </div>
+              )
+            }
+            
+            return null
+          })()}
         </div>
       </article>
 

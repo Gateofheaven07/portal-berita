@@ -38,6 +38,7 @@ export default function EditArticle() {
   const [categoryId, setCategoryId] = useState("")
   const [featuredImage, setFeaturedImage] = useState("")
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [galleryImages, setGalleryImages] = useState<{ id: string; url: string; caption: string }[]>([])
   const [status, setStatus] = useState<"draft" | "published">("draft")
   const [submitting, setSubmitting] = useState(false)
   const [loadingArticle, setLoadingArticle] = useState(true)
@@ -85,6 +86,7 @@ export default function EditArticle() {
       setFeaturedImage(articleData.featuredImage || "")
       setImagePreview(articleData.featuredImage || null)
       setStatus(articleData.status || "draft")
+      setGalleryImages(articleData.images || [])
     } catch (error) {
       console.error("Error fetching article:", error)
       setError("Terjadi kesalahan saat memuat artikel")
@@ -136,6 +138,46 @@ export default function EditArticle() {
     }
   }
 
+  function handleGalleryImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    if (galleryImages.length + files.length > 9) {
+      setError("Maksimal 9 gambar tambahan (total 10 dengan gambar utama).")
+      return
+    }
+
+    Array.from(files).forEach(file => {
+      // Validasi tipe file
+      const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"]
+      if (!validTypes.includes(file.type)) return
+
+      // Validasi ukuran file (max 5MB)
+      if (file.size > 5 * 1024 * 1024) return
+
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        const base64String = reader.result as string
+        setGalleryImages(prev => [...prev, { 
+          id: Math.random().toString(36).substr(2, 9), 
+          url: base64String, 
+          caption: "" 
+        }])
+      }
+      reader.readAsDataURL(file)
+    })
+  }
+
+  function removeGalleryImage(id: string) {
+    setGalleryImages(prev => prev.filter(img => img.id !== id))
+  }
+
+  function updateGalleryCaption(id: string, caption: string) {
+    setGalleryImages(prev => prev.map(img => 
+      img.id === id ? { ...img, caption } : img
+    ))
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
@@ -156,6 +198,7 @@ export default function EditArticle() {
           categoryId,
           featuredImage,
           status,
+          images: galleryImages,
         }),
       })
 
@@ -345,6 +388,59 @@ export default function EditArticle() {
             <p className="mt-2 text-xs text-muted-foreground">
               Format yang didukung: JPG, PNG, WEBP, GIF (Maksimal 5MB)
             </p>
+          </div>
+
+          {/* Gallery Images */}
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Galeri Gambar (Slider)
+            </label>
+            <p className="text-xs text-muted-foreground mb-4">
+              Gambar ini akan ditampilkan sebagai slider. Maksimal 9 gambar tambahan.
+            </p>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {galleryImages.map((img, index) => (
+                  <div key={img.id} className="relative group border rounded-lg overflow-hidden bg-muted">
+                    <img 
+                      src={img.url} 
+                      alt={`Gallery ${index + 1}`} 
+                      className="w-full h-32 object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeGalleryImage(img.id)}
+                      className="absolute top-2 right-2 p-1 bg-destructive text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <span className="sr-only">Hapus</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                    <input
+                      type="text"
+                      placeholder="Caption (opsional)"
+                      value={img.caption || ""}
+                      onChange={(e) => updateGalleryCaption(img.id, e.target.value)}
+                      className="w-full px-2 py-1 text-xs border-t focus:outline-none"
+                    />
+                  </div>
+                ))}
+                
+                {galleryImages.length < 9 && (
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-input rounded-lg cursor-pointer hover:border-primary transition-colors">
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                      onChange={handleGalleryImageUpload}
+                      className="hidden"
+                    />
+                    <span className="text-2xl text-muted-foreground">+</span>
+                    <span className="text-xs text-muted-foreground mt-1">Tambah Gambar</span>
+                  </label>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Content */}

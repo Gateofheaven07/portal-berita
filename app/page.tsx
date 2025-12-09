@@ -43,7 +43,7 @@ async function getLatestArticles() {
       FROM "Article" a
       LEFT JOIN "Category" c ON a."categoryId" = c.id
       WHERE a.status = 'published'
-      ORDER BY a."publishedAt" DESC
+      ORDER BY a."publishedAt" DESC NULLS LAST, a."createdAt" DESC
       LIMIT 6
     `
     // Convert to array and normalize data structure

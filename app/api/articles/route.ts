@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
         FROM "Article" a
         LEFT JOIN "Category" c ON a."categoryId" = c.id
         WHERE a.status = ${status} AND a."categoryId" = ${categoryId}
-        ORDER BY a."publishedAt" DESC NULLS LAST
+        ORDER BY a."publishedAt" DESC NULLS LAST, a."createdAt" DESC
       `
     } else if (status) {
       articles = await sql`
@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
         FROM "Article" a
         LEFT JOIN "Category" c ON a."categoryId" = c.id
         WHERE a.status = ${status}
-        ORDER BY a."publishedAt" DESC NULLS LAST
+        ORDER BY a."publishedAt" DESC NULLS LAST, a."createdAt" DESC
       `
     } else if (categoryId) {
       articles = await sql`
@@ -121,7 +121,7 @@ export async function GET(req: NextRequest) {
         FROM "Article" a
         LEFT JOIN "Category" c ON a."categoryId" = c.id
         WHERE a."categoryId" = ${categoryId}
-        ORDER BY a."publishedAt" DESC NULLS LAST
+        ORDER BY a."publishedAt" DESC NULLS LAST, a."createdAt" DESC
       `
     } else {
       // Default: get all articles (for admin panel)
@@ -142,7 +142,7 @@ export async function GET(req: NextRequest) {
           c.name as "categoryName"
         FROM "Article" a
         LEFT JOIN "Category" c ON a."categoryId" = c.id
-        ORDER BY a."publishedAt" DESC NULLS LAST
+        ORDER BY a."publishedAt" DESC NULLS LAST, a."createdAt" DESC
       `
     }
 

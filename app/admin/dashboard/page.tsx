@@ -143,7 +143,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Additional Management */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Link
             href="/admin/categories"
             className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-shadow"
@@ -158,6 +158,14 @@ export default function AdminDashboard() {
           >
             <h3 className="font-bold text-foreground mb-2">Pesan Masuk</h3>
             <p className="text-sm text-muted-foreground">Lihat pesan dari halaman kontak</p>
+          </Link>
+
+          <Link
+            href="/admin/comments"
+            className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-bold text-foreground mb-2">Komentar</h3>
+            <p className="text-sm text-muted-foreground">Kelola komentar dari pembaca</p>
           </Link>
         </div>
       </main>

@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ChevronLeft, Clock, User, Eye } from "lucide-react"
 import { formatDate, formatDateShort } from "@/lib/date-utils"
 import { ViewTracker } from "@/components/view-tracker"
+import { ArticleComments } from "@/components/article-comments"
 import {
   Carousel,
   CarouselContent,
@@ -263,6 +264,9 @@ export default async function ArticlePage({ params }: PageProps) {
             </div>
           </div>
         </div>
+
+        {/* Comments Section */}
+        <ArticleComments articleId={article.id} />
       </div>
 
       {/* Related Articles */}
